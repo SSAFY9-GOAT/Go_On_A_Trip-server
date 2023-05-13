@@ -29,25 +29,17 @@ public class Article extends TimeBaseEntity {
     private String content;
     @Column(nullable = false)
     private int hit;
-    @Column(nullable = false)
-    private LocalDateTime createdDate;
-    @Column(nullable = false)
-    private LocalDateTime lastModifiedDate;
-    @Column(nullable = false)
-    private Long memberId;
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
     @Builder
-    public Article(Long id, String title, String content, int hit, LocalDateTime createdDate, LocalDateTime lastModifiedDate, Long memberId, Member member) {
+    public Article(Long id, String title, String content, int hit, Member member) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.hit = hit;
-        this.createdDate = createdDate;
-        this.lastModifiedDate = lastModifiedDate;
-        this.memberId = memberId;
         this.member = member;
     }
 
@@ -55,7 +47,6 @@ public class Article extends TimeBaseEntity {
     public void editArticle(String title, String content) {
         this.title = title;
         this.content = content;
-        this.lastModifiedDate = LocalDateTime.now();
     }
 
     public void increaseHit() {
