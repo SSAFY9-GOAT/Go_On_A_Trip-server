@@ -43,9 +43,9 @@ create table if not exists `ARTICLE`
     foreign key (`member_id`) references MEMBER (`member_id`)
 );
 
-create table if not exists `NOTION`
+create table if not exists `NOTICE`
 (
-    `notion_id`          bigint        not null primary key auto_increment,
+    `notice_id`          bigint        not null primary key auto_increment,
     `title`              varchar(100)  not null,
     `content`            varchar(1000) not null,
     `hit`                int           not null default 0,

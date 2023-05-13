@@ -1,4 +1,4 @@
-package com.ssafy.goat.article;
+package com.ssafy.goat.notice;
 
 import com.ssafy.goat.common.domain.TimeBaseEntity;
 import com.ssafy.goat.member.Member;
@@ -8,52 +8,46 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.LAZY;
 
-
-// TODO: 2023-05-12 access, PROTECTED 이게 뭘까 ?
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Article extends TimeBaseEntity {
+public class Notice extends TimeBaseEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "article_id")
+    @Column(name = "notice_id")
     private Long id;
     @Column(nullable = false)
     private String title;
+    @Lob
     @Column(nullable = false)
     private String content;
+
     @Column(nullable = false)
     private int hit;
+    @Column(nullable = false)
+    private boolean top;
+
+    // TODO: 2023/05/13 이거 맞나?!
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "member_id")
+    private Member createdBy;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
-    private Member member;
+    private Member lastModifiedBy;
 
     @Builder
-    public Article(Long id, String title, String content, int hit, Member member) {
+    public Notice(Long id, String title, String content, int hit, boolean top, Member createdBy, Member lastModifiedBy) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.hit = hit;
-        this.member = member;
+        this.top = top;
+        this.createdBy = createdBy;
+        this.lastModifiedBy = lastModifiedBy;
     }
-
-    //== 비즈니스 로직 ==//
-    public void editArticle(String title, String content) {
-        this.title = title;
-        this.content = content;
-    }
-
-    public void increaseHit() {
-        this.hit += 1;
-    }
-
-//    public void changeMember(Long memberId) {
-//        this.member = new Member(memberId);
-//    }
 }
