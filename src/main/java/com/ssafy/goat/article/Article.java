@@ -7,11 +7,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+
+import static javax.persistence.FetchType.LAZY;
 
 
 // TODO: 2023-05-12 access, PROTECTED 이게 뭘까 ?
@@ -36,9 +35,12 @@ public class Article extends TimeBaseEntity {
     private LocalDateTime lastModifiedDate;
     @Column(nullable = false)
     private Long memberId;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Builder
-    public Article(Long id, String title, String content, int hit, LocalDateTime createdDate, LocalDateTime lastModifiedDate, Long memberId) {
+    public Article(Long id, String title, String content, int hit, LocalDateTime createdDate, LocalDateTime lastModifiedDate, Long memberId, Member member) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -46,6 +48,7 @@ public class Article extends TimeBaseEntity {
         this.createdDate = createdDate;
         this.lastModifiedDate = lastModifiedDate;
         this.memberId = memberId;
+        this.member = member;
     }
 
     //== 비즈니스 로직 ==//
