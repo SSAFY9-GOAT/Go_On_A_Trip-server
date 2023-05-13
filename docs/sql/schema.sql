@@ -2,7 +2,7 @@ create schema if not exists `goatdb` default character set utf8mb4 collate utf8m
 
 use goatdb;
 
-drop table if exists member;
+# drop table if exists member;
 
 create table if not exists `MEMBER`
 (
@@ -23,7 +23,7 @@ create table if not exists `MEMBER`
     `last_modified_date`          timestamp   not null default current_timestamp
 );
 
-drop table if exists content_type;
+# drop table if exists content_type;
 
 create table if not exists `CONTENT_TYPE`
 (
