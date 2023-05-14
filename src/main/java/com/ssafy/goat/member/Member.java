@@ -5,11 +5,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -41,6 +39,7 @@ public class Member extends TimeBaseEntity {
     private String nickname;
     @Column(nullable = false)
     private LocalDateTime nicknameLastModifiedDate;
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Authority authority;
     @Column(nullable = false)

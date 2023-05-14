@@ -7,6 +7,7 @@ import com.ssafy.goat.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -27,6 +28,7 @@ public class MemberServiceImpl implements MemberService{
                 .birthyear(memberAddDto.getBirthyear())
                 .gender(memberAddDto.getGender())
                 .nickname(memberAddDto.getNickname())
+                .nicknameLastModifiedDate(LocalDateTime.now())
                 .authority(memberAddDto.getAuthority())
                 .snsId(memberAddDto.getSnsId())
                 .build();
