@@ -14,11 +14,10 @@ import java.time.LocalDateTime;
 
 import static com.ssafy.goat.member.Authority.CLIENT;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-class AccountServiceImplTest {
+class AccountServiceTest {
     @Autowired
     private AccountService accountService;
     @Autowired

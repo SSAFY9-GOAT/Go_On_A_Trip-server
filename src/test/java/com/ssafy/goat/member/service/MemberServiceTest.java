@@ -1,7 +1,6 @@
 package com.ssafy.goat.member.service;
 
 import com.ssafy.goat.member.Member;
-import com.ssafy.goat.member.dto.LoginMember;
 import com.ssafy.goat.member.dto.MemberAddDto;
 import com.ssafy.goat.member.repository.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,16 +11,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.Optional;
 
 import static com.ssafy.goat.member.Authority.CLIENT;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-class MemberServiceImplTest {
+class MemberServiceTest {
 
     @Autowired
     private MemberService memberService;
