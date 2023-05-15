@@ -26,8 +26,6 @@ public class ArticleRepositoryImpl implements ArticleQueryRepository{
 
     @Override
     public Page<ArticleListDto> searchByCondition(ArticleSearch condition, Pageable pageable) {
-        System.out.println("pageable = " + pageable.getOffset());
-        System.out.println(pageable.getPageSize());
         List<ArticleListDto> articleListDto = queryFactory
                 .select(Projections.constructor(ArticleListDto.class,
                         article.id,
