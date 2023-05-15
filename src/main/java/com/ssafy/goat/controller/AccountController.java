@@ -27,10 +27,7 @@ public class AccountController {
     @ApiOperation(value="로그인")
     public ResponseEntity<?> login(
             @Valid @RequestBody LoginRequest loginRequest){
-        log.debug(loginRequest.getId());
-        System.out.println(loginRequest.getId());
-        log.debug(loginRequest.getPassword());
-        System.out.println(loginRequest.getPassword());
+        log.debug("로그인 리퀘스트={}", loginRequest);
         LoginMember loginUser = accountService.login(loginRequest.getId(), loginRequest.getPassword());
         return new ResponseEntity<>(loginUser, HttpStatus.OK);
     }
