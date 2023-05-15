@@ -1,33 +1,12 @@
 package com.ssafy.goat.article.repository;
 
-import com.ssafy.goat.article.dto.ArticleDetailDto;
 import com.ssafy.goat.article.dto.ArticleListDto;
 import com.ssafy.goat.article.dto.ArticleSearch;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import javax.persistence.EntityManager;
-import java.util.List;
-import java.util.Optional;
+public interface ArticleQueryRepository {
+    Page<ArticleListDto> searchByCondition(ArticleSearch condition, Pageable pageable);
 
-@Repository
-public class ArticleQueryRepository {
-//    private final JPAQueryFactory queryFactory;
-//
-//    public ArticleQueryRepository(EntityManager em) {
-//        this.queryFactory = new JPAQueryFactory(em);
-//    }
-//    Optional<ArticleDetailDto> findDetailById(Long articleId){
-//    }
-//
-//    List<ArticleListDto> findListByCondition(ArticleSearch condition, int pageNum, int amount){
-//
-//    }
-//
-//    List<ArticleListDto> findListByMemberId(Long memberId, int pageNum, int amount){
-//
-//    }
-//
-//    int findTotalCount(){
-//
-//    }
+
 }

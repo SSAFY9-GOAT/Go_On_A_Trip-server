@@ -33,11 +33,11 @@ public class Notice extends TimeBaseEntity {
 
     // TODO: 2023/05/13 이거 맞나?!
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id", insertable = false, updatable = false)
     private Member createdBy;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id", insertable = false, updatable = false)
     private Member lastModifiedBy;
 
     @Builder
