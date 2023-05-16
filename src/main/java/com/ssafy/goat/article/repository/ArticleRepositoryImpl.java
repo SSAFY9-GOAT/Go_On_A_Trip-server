@@ -3,6 +3,8 @@ package com.ssafy.goat.article.repository;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssafy.goat.article.Article;
+import com.ssafy.goat.article.dto.ArticleDetailDto;
 import com.ssafy.goat.article.dto.ArticleListDto;
 import com.ssafy.goat.article.dto.ArticleSearch;
 import org.springframework.data.domain.Page;
@@ -48,7 +50,28 @@ public class ArticleRepositoryImpl implements ArticleQueryRepository{
                 .size();
         return new PageImpl<>(articleListDto, pageable, count);
     }
-private BooleanExpression isKeyword(String keyword) {
+
+    @Override
+    public ArticleDetailDto searchById(Long articleId) {
+        ArticleDetailDto articleDetailDto = queryFactory
+                .select(Projections.constructor(ArticleDetailDto.class,
+                        article.id,
+                        article.title,
+                        article.content,
+                        article.createdDate,
+                        member.id,
+                        member.nickname
+                        ))
+                .from(article)
+                .join(article.member, member)
+                .where(article.id.eq(articleId))
+                .fetchOne();
+        return articleDetailDto;
+    }
+
+    private BooleanExpression isKeyword(String keyword) {
     return StringUtils.hasText(keyword) ? article.title.like("%" + keyword + "%") : null;
 }
+
+
 }
