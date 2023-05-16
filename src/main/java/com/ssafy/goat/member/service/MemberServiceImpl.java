@@ -3,6 +3,7 @@ package com.ssafy.goat.member.service;
 import com.ssafy.goat.common.exception.DuplicateException;
 import com.ssafy.goat.controller.response.MemberResponse;
 import com.ssafy.goat.member.Member;
+import com.ssafy.goat.member.dto.ChangUserDto;
 import com.ssafy.goat.member.dto.MemberAddDto;
 import com.ssafy.goat.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -53,6 +54,30 @@ public class MemberServiceImpl implements MemberService {
                 .birth(member.getBirthyear() + "년 " + member.getBirth().substring(0, 2) + "월 " + member.getBirth().substring(2) + "일")
                 .gender(member.getGender().equals("M")?"남성":"여성")
                 .build();
+    }
+
+    @Override
+    public Long changUserInfo(Long id, ChangUserDto changUserDto) {
+        Optional<Member> findUser = memberRepository.findById(id);
+        if(!findUser.isPresent()){
+            return null;
+        }
+        Member member = findUser.get();
+
+        if(!changUserDto.getPassword().equals(member.getLoginPw())){
+            return null;
+        }
+
+        if(!changUserDto.getEmail().equals(member.getEmail())){
+            member.changeEmail(changUserDto.getEmail());
+        }
+        if(!changUserDto.getNickname().equals(member.getNickname())){
+            member.changeNickname(changUserDto.getNickname());
+        }
+        if(!changUserDto.getPhone().equals(member.getPhone())){
+            member.changePhone(changUserDto.getPhone());
+        }
+        return member.getId();
     }
 
     private void duplicateLoginId(MemberAddDto dto) {
