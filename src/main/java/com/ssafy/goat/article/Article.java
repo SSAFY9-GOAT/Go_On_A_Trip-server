@@ -20,7 +20,7 @@ import static javax.persistence.FetchType.LAZY;
 public class Article extends TimeBaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "article_id")
     private Long id;
     @Column(nullable = false)
