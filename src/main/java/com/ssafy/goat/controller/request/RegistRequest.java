@@ -10,9 +10,9 @@ import javax.validation.constraints.Size;
 public class RegistRequest {
 
     @NotBlank
-    @Size(min = 8, max = 20)
+    @Size(min = 5, max = 20)
     // TODO: 2023-05-15 아이디 패턴
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$")
+//    @Pattern(regexp = "^(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$")
     private String loginId;
     @NotBlank
     @Size(min = 8, max = 20)
