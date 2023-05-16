@@ -1,5 +1,7 @@
 package com.ssafy.goat.article.service;
 
+import com.ssafy.goat.article.dto.ArticleDetailDto;
+import com.ssafy.goat.article.dto.ArticleDto;
 import com.ssafy.goat.article.dto.ArticleListDto;
 import com.ssafy.goat.article.dto.ArticleSearch;
 import org.springframework.data.domain.Page;
@@ -11,4 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ArticleService {
     @Transactional(readOnly = true)
     Page<ArticleListDto> searchArticles(ArticleSearch condition, Pageable pageable);
+
+    ArticleDetailDto searchArticle(Long articleId);
+
+    long addArticle (Long memberId, ArticleDto articleDto);
+
+    long increaseHit(Long articleId);
+
 }
