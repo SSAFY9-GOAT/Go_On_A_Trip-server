@@ -81,12 +81,15 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Long changePassword(Long id, String newPassword) {
+    public Long changePassword(Long id, String oldPassword, String newPassword) {
         Optional<Member> findUser = memberRepository.findById(id);
         if (!findUser.isPresent()) {
             return null;
         }
         Member member = findUser.get();
+        if (!member.getLoginPw().equals(oldPassword)) {
+            return null;
+        }
         member.changeLoginPw(newPassword);
         return member.getId();
     }
