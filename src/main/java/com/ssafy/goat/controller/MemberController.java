@@ -1,6 +1,7 @@
 package com.ssafy.goat.controller;
 
 import com.ssafy.goat.controller.request.ChangInfoRequest;
+import com.ssafy.goat.controller.request.ChangPasswordRequest;
 import com.ssafy.goat.controller.request.RegistRequest;
 import com.ssafy.goat.controller.response.MemberResponse;
 import com.ssafy.goat.member.dto.ChangUserDto;
@@ -66,8 +67,8 @@ public class MemberController {
 
     @PostMapping("/modify")
     @ApiOperation(value = "정보 수정하기")
-    public int modify(@Valid @RequestBody ChangInfoRequest request){
-        StringTokenizer st = new StringTokenizer(request.getPhone(),"");
+    public int modify(@Valid @RequestBody ChangInfoRequest request) {
+        StringTokenizer st = new StringTokenizer(request.getPhone(), "");
         ChangUserDto dto = ChangUserDto.builder()
                 .password(request.getPassword())
                 .phone(st.nextToken() + st.nextToken() + st.nextToken())
@@ -75,16 +76,20 @@ public class MemberController {
                 .nickname(request.getNickname())
                 .build();
         Long member = memberService.changUserInfo(request.getId(), dto);
-        if(member.equals(request.getId())){
+        if (member.equals(request.getId())) {
             return 1;
-        }else{
+        } else {
             return -1;
         }
     }
 
     @PostMapping("/modipyPw")
     @ApiOperation(value = "비밀번호 변경")
-    public int modifyPw(@Valid @RequestBody ChangPasswordRequest request){
-
+    public int modifyPw(@Valid @RequestBody ChangPasswordRequest request) {
+        Long id = memberService.changePassword(request.getId(), request.getOriginalPw(), request.getNewPw());
+        if (id == null) {
+            return -1;
+        }
+        return 1;
     }
 }
