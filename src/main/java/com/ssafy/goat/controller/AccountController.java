@@ -29,7 +29,6 @@ public class AccountController {
     ) {
         log.debug("로그인 리퀘스트={}", loginRequest);
         LoginMember loginUser = accountService.login(loginRequest.getId(), loginRequest.getPassword());
-        session.setAttribute("loginUser", loginUser);
         return new ResponseEntity<>(loginUser, HttpStatus.OK);
     }
 }

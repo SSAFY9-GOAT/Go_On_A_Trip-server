@@ -56,9 +56,9 @@ public class MemberController {
     @GetMapping("/mypage")
     @ApiOperation(value = "마이페이지")
     public MemberResponse mypage(
-            @SessionAttribute(name = "loginUser") LoginMember loginMember
-            ){
+            @RequestParam(name = "loginId") String loginUser
+    ) {
         log.debug("마이페이지");
-        return memberService.getUserInfo(loginMember.getLoginId());
+        return memberService.getUserInfo(loginUser);
     }
 }
