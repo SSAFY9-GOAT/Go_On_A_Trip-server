@@ -39,7 +39,7 @@ public class ArticleRepositoryImpl implements ArticleQueryRepository{
                 .from(article)
                 .join(article.member, member)
                 .where(isKeyword(condition.getCondition()))
-                .orderBy(article.createdDate.desc())
+                .orderBy(article.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
