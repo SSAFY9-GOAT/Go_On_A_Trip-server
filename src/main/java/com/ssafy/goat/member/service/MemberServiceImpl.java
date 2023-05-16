@@ -52,31 +52,42 @@ public class MemberServiceImpl implements MemberService {
                 .email(member.getEmail())
                 .phone(member.getPhone())
                 .birth(member.getBirthyear() + "년 " + member.getBirth().substring(0, 2) + "월 " + member.getBirth().substring(2) + "일")
-                .gender(member.getGender().equals("M")?"남성":"여성")
+                .gender(member.getGender().equals("M") ? "남성" : "여성")
                 .build();
     }
 
     @Override
     public Long changUserInfo(Long id, ChangUserDto changUserDto) {
         Optional<Member> findUser = memberRepository.findById(id);
-        if(!findUser.isPresent()){
+        if (!findUser.isPresent()) {
             return null;
         }
         Member member = findUser.get();
 
-        if(!changUserDto.getPassword().equals(member.getLoginPw())){
+        if (!changUserDto.getPassword().equals(member.getLoginPw())) {
             return null;
         }
 
-        if(!changUserDto.getEmail().equals(member.getEmail())){
+        if (!changUserDto.getEmail().equals(member.getEmail())) {
             member.changeEmail(changUserDto.getEmail());
         }
-        if(!changUserDto.getNickname().equals(member.getNickname())){
+        if (!changUserDto.getNickname().equals(member.getNickname())) {
             member.changeNickname(changUserDto.getNickname());
         }
-        if(!changUserDto.getPhone().equals(member.getPhone())){
+        if (!changUserDto.getPhone().equals(member.getPhone())) {
             member.changePhone(changUserDto.getPhone());
         }
+        return member.getId();
+    }
+
+    @Override
+    public Long changePassword(Long id, String newPassword) {
+        Optional<Member> findUser = memberRepository.findById(id);
+        if (!findUser.isPresent()) {
+            return null;
+        }
+        Member member = findUser.get();
+        member.changeLoginPw(newPassword);
         return member.getId();
     }
 

@@ -13,4 +13,6 @@ public interface MemberService {
     MemberResponse getUserInfo(String loginId);
 
     Long changUserInfo(Long id, ChangUserDto changUserDto);
+
+    Long changePassword(Long Id, String newPassword);
 }
