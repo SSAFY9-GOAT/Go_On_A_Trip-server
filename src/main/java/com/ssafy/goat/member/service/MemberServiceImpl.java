@@ -51,7 +51,7 @@ public class MemberServiceImpl implements MemberService {
                 .email(member.getEmail())
                 .phone(member.getPhone())
                 .birth(member.getBirthyear() + "년 " + member.getBirth().substring(0, 2) + "월 " + member.getBirth().substring(2) + "일")
-                .gender(member.getGender())
+                .gender(member.getGender().equals("M")?"남성":"여성")
                 .build();
     }
 
