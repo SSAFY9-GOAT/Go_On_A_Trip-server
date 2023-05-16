@@ -4,34 +4,51 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+
+import static javax.persistence.FetchType.LAZY;
+import static lombok.AccessLevel.PROTECTED;
+
+@Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 public class AttractionInfo {
 
-    private Integer id;
-    private Integer contentTypeId;
+    @Id
+    @Column(name = "content_id")
+    private Long id;
+    @Column(length = 100)
     private String title;
+    @Column(length = 100)
     private String addr1;
+    @Column(length = 50)
     private String addr2;
+    @Column(length = 50)
     private String zipcode;
+    @Column(length = 50)
     private String tel;
+    @Column(length = 200)
     private String firstImage;
+    @Column(length = 200)
     private String firstImage2;
-    private Integer readCount;
-    private Sido sido;
-    private Gugun gugun;
-    private Double latitude;
-    private Double longitude;
+    private int readcount;
+    @Column(precision = 20, scale = 17)
+    private double latitude;
+    @Column(precision = 20, scale = 17)
+    private double longitude;
+    @Column(length = 2)
     private String mlevel;
 
-    public AttractionInfo(Integer id) {
-        this.id = id;
-    }
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "sido_code")
+    private Sido sido;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "gugun_code")
+    private Gugun gugun;
 
     @Builder
-    public AttractionInfo(Integer id, Integer contentTypeId, String title, String addr1, String addr2, String zipcode, String tel, String firstImage, String firstImage2, Integer readCount, Sido sido, Gugun gugun, Double latitude, Double longitude, String mlevel) {
+    public AttractionInfo(Long id, String title, String addr1, String addr2, String zipcode, String tel, String firstImage, String firstImage2, int readcount, double latitude, double longitude, String mlevel, Sido sido, Gugun gugun) {
         this.id = id;
-        this.contentTypeId = contentTypeId;
         this.title = title;
         this.addr1 = addr1;
         this.addr2 = addr2;
@@ -39,11 +56,11 @@ public class AttractionInfo {
         this.tel = tel;
         this.firstImage = firstImage;
         this.firstImage2 = firstImage2;
-        this.readCount = readCount;
-        this.sido = sido;
-        this.gugun = gugun;
+        this.readcount = readcount;
         this.latitude = latitude;
         this.longitude = longitude;
         this.mlevel = mlevel;
+        this.sido = sido;
+        this.gugun = gugun;
     }
 }
