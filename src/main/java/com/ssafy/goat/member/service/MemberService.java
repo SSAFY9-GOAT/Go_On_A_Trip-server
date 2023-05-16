@@ -9,5 +9,5 @@ import org.springframework.transaction.annotation.Transactional;
 public interface MemberService {
     Long signUp(MemberAddDto memberAddDto);
 
-    MemberResponse getUserInfo(Long id);
+    MemberResponse getUserInfo(String loginId);
 }
