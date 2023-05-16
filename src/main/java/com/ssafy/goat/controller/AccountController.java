@@ -8,11 +8,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @RestController
@@ -24,11 +22,14 @@ public class AccountController {
     private final AccountService accountService;
 
     @PostMapping("/login")
-    @ApiOperation(value="로그인")
+    @ApiOperation(value = "로그인")
     public ResponseEntity<?> login(
-            @Valid @RequestBody LoginRequest loginRequest){
+            @Valid @RequestBody LoginRequest loginRequest,
+            HttpSession session
+    ) {
         log.debug("로그인 리퀘스트={}", loginRequest);
         LoginMember loginUser = accountService.login(loginRequest.getId(), loginRequest.getPassword());
+        session.setAttribute("loginUser", loginUser);
         return new ResponseEntity<>(loginUser, HttpStatus.OK);
     }
 }
