@@ -1,7 +1,9 @@
 package com.ssafy.goat.controller;
 
+import com.ssafy.goat.controller.request.ChangInfoRequest;
 import com.ssafy.goat.controller.request.RegistRequest;
 import com.ssafy.goat.controller.response.MemberResponse;
+import com.ssafy.goat.member.dto.ChangUserDto;
 import com.ssafy.goat.member.dto.LoginMember;
 import com.ssafy.goat.member.dto.MemberAddDto;
 import com.ssafy.goat.member.service.MemberService;
@@ -60,5 +62,23 @@ public class MemberController {
     ) {
         log.debug("마이페이지");
         return memberService.getUserInfo(loginUser);
+    }
+
+    @PostMapping("/modify")
+    @ApiOperation(value = "정보 수정하기")
+    public int modify(@Valid @RequestBody ChangInfoRequest request){
+        StringTokenizer st = new StringTokenizer(request.getPhone(),"");
+        ChangUserDto dto = ChangUserDto.builder()
+                .password(request.getPassword())
+                .phone(st.nextToken() + st.nextToken() + st.nextToken())
+                .email(request.getEmail())
+                .nickname(request.getNickname())
+                .build();
+        Long member = memberService.changUserInfo(request.getId(), dto);
+        if(member.equals(request.getId())){
+            return 1;
+        }else{
+            return -1;
+        }
     }
 }
