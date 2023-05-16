@@ -81,4 +81,10 @@ public class MemberController {
             return -1;
         }
     }
+
+    @PostMapping("/modipyPw")
+    @ApiOperation(value = "비밀번호 변경")
+    public int modifyPw(@Valid @RequestBody ChangPasswordRequest request){
+
+    }
 }
