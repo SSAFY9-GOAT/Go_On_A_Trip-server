@@ -1,16 +1,17 @@
 package com.ssafy.goat.controller;
 
 import com.ssafy.goat.controller.request.RegistRequest;
+import com.ssafy.goat.controller.response.MemberResponse;
+import com.ssafy.goat.member.dto.LoginMember;
 import com.ssafy.goat.member.dto.MemberAddDto;
 import com.ssafy.goat.member.service.MemberService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import java.util.StringTokenizer;
@@ -50,5 +51,14 @@ public class MemberController {
                 .build());
         log.debug("회원가입 joinId = {}", joinId);
         return 1;
+    }
+
+    @GetMapping("/mypage")
+    @ApiOperation(value = "마이페이지")
+    public MemberResponse mypage(
+            @SessionAttribute(name = "loginUser") LoginMember loginMember
+            ){
+        log.debug("마이페이지");
+        return memberService.getUserInfo(loginMember.getLoginId());
     }
 }
