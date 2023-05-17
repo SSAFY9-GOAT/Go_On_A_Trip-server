@@ -5,6 +5,7 @@ import com.ssafy.goat.article.dto.ArticleDto;
 import com.ssafy.goat.article.dto.ArticleListDto;
 import com.ssafy.goat.article.dto.ArticleSearch;
 import com.ssafy.goat.article.service.ArticleService;
+import com.ssafy.goat.controller.request.AddArticleRequest;
 import com.ssafy.goat.member.dto.LoginMember;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/articles")
 @RequiredArgsConstructor
-//@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS })
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS })
 @Slf4j
 public class ArticleController {
     private  final ArticleService articleService;
@@ -44,10 +45,14 @@ public class ArticleController {
     @PostMapping("/write")
     @ApiOperation(value = "게시글 등록")
     public ResponseEntity<?> write(
-            @RequestParam(name = "article") ArticleDto articleDto,
-            @SessionAttribute(name= "loginUser")LoginMember loginMember
+            @RequestBody AddArticleRequest request,
+            @RequestParam(name = "loginUserId") long loginUserId
             ){
-        long result = articleService.addArticle(loginMember.getId(), articleDto);
+        ArticleDto articleDto = ArticleDto.builder()
+                .title(request.getTitle())
+                .content(request.getContent())
+                .build();
+        long result = articleService.addArticle(loginUserId, articleDto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
