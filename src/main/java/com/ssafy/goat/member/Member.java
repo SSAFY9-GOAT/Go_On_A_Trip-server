@@ -44,9 +44,11 @@ public class Member extends TimeBaseEntity {
     private Authority authority;
     @Column(nullable = false)
     private String snsId;
+    @Column(nullable = true)
+    private String token;
 
     @Builder
-    public Member(Long id, String loginId, String loginPw, String username, String email, String phone, String birth, String birthyear, String gender, String nickname, LocalDateTime nicknameLastModifiedDate, Authority authority, String snsId) {
+    public Member(Long id, String loginId, String loginPw, String username, String email, String phone, String birth, String birthyear, String gender, String nickname, LocalDateTime nicknameLastModifiedDate, Authority authority, String snsId, String token) {
         this.id = id;
         this.loginId = loginId;
         this.loginPw = loginPw;
@@ -60,9 +62,15 @@ public class Member extends TimeBaseEntity {
         this.nicknameLastModifiedDate = nicknameLastModifiedDate;
         this.authority = authority;
         this.snsId = snsId;
+        this.token = token;
     }
 
     //== 비즈니스 로직 ==//
+
+    public void changeToken(String refreshToken) {
+        this.token = refreshToken;
+    }
+
     public void changeLoginPw(String loginPw) {
         this.loginPw = loginPw;
     }
