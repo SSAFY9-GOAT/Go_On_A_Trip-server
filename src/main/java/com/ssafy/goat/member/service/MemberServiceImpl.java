@@ -17,6 +17,7 @@ import java.util.Optional;
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
+    // TODO: 2023-05-16 아이디로 멤버 찾아오는거 함수로 빼기, 예외 처리하기
     @Override
     public Long signUp(MemberAddDto memberAddDto) {
         duplicateLoginId(memberAddDto);
@@ -92,6 +93,20 @@ public class MemberServiceImpl implements MemberService {
         }
         member.changeLoginPw(newPassword);
         return member.getId();
+    }
+
+    @Override
+    public int withdrawal(Long id, String loginPw) {
+        Optional<Member> findUser = memberRepository.findById(id);
+        if (!findUser.isPresent()) {
+            return -1;
+        }
+        Member member = findUser.get();
+        if (!member.getLoginPw().equals(loginPw)) {
+            return -1;
+        }
+        memberRepository.delete(member);
+        return 1;
     }
 
     private void duplicateLoginId(MemberAddDto dto) {

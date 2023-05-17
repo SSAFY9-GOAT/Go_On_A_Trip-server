@@ -6,21 +6,22 @@ use goatdb;
 
 create table if not exists `MEMBER`
 (
-    `member_id`                   bigint      not null primary key auto_increment,
-    `login_id`                    varchar(20) not null,
-    `login_pw`                    varchar(20) not null,
-    `username`                    varchar(20) not null,
-    `email`                       varchar(50) not null,
-    `phone`                       varchar(11) not null,
-    `birth`                       varchar(6)  not null,
-    `birthyear`                   varchar(4)  not null,
-    `gender`                      varchar(1)  not null,
-    `nickname`                    varchar(10) not null,
-    `nickname_last_modified_date` timestamp   not null default current_timestamp,
-    `authority`                   varchar(10) not null default 'CLIENT',
-    `sns_id`                      varchar(11) not null default '-1',
-    `created_date`                timestamp   not null default current_timestamp,
-    `last_modified_date`          timestamp   not null default current_timestamp
+    `member_id`                   bigint        not null primary key auto_increment,
+    `login_id`                    varchar(20)   not null,
+    `login_pw`                    varchar(20)   not null,
+    `username`                    varchar(20)   not null,
+    `email`                       varchar(50)   not null,
+    `phone`                       varchar(11)   not null,
+    `birth`                       varchar(6)    not null,
+    `birthyear`                   varchar(4)    not null,
+    `gender`                      varchar(1)    not null,
+    `nickname`                    varchar(10)   not null,
+    `nickname_last_modified_date` timestamp     not null default current_timestamp,
+    `authority`                   varchar(10)   not null default 'CLIENT',
+    `sns_id`                      varchar(11)   not null default '-1',
+    `token`                       varchar(1000) null     default null,
+    `created_date`                timestamp     not null default current_timestamp,
+    `last_modified_date`          timestamp     not null default current_timestamp
 );
 
 # drop table if exists content_type;

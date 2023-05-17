@@ -3,6 +3,7 @@ package com.ssafy.goat.controller;
 import com.ssafy.goat.controller.request.ChangInfoRequest;
 import com.ssafy.goat.controller.request.ChangPasswordRequest;
 import com.ssafy.goat.controller.request.RegistRequest;
+import com.ssafy.goat.controller.request.WithdrawalRequest;
 import com.ssafy.goat.controller.response.MemberResponse;
 import com.ssafy.goat.member.dto.ChangUserDto;
 import com.ssafy.goat.member.dto.LoginMember;
@@ -91,5 +92,11 @@ public class MemberController {
             return -1;
         }
         return 1;
+    }
+
+    @PostMapping("/withdrawal")
+    @ApiOperation(value = "회원 탈퇴")
+    public int withdrawal(@Valid @RequestBody WithdrawalRequest request) {
+        return memberService.withdrawal(request.getId(), request.getLoginPw());
     }
 }
