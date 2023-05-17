@@ -6,4 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public interface AccountService {
     LoginMember login(String loginId, String loginPw);
+
+    void saveRefreshToken(String loginId, String refreshToken);
+
+    Object getRefreshToken(String loginId);
+
+    void deleteRefreshToken(String loginId);
 }

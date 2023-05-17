@@ -13,7 +13,7 @@ import static com.ssafy.goat.common.exception.ExceptionMessage.LOGIN_EXCEPTION;
 
 @Service
 @RequiredArgsConstructor
-public class AccountServiceImpl  implements AccountService {
+public class AccountServiceImpl implements AccountService {
 
     private final MemberRepository memberRepository;
 
@@ -34,5 +34,32 @@ public class AccountServiceImpl  implements AccountService {
                 .authority(member.getAuthority().toString())
                 .snsUser(snsUser)
                 .build();
+    }
+
+    @Override
+    public void saveRefreshToken(String loginId, String refreshToken) {
+        Member member = getMember(loginId);
+        member.changeToken(refreshToken);
+    }
+
+    @Override
+    public Object getRefreshToken(String loginId) {
+        Member member = getMember(loginId);
+        return member.getToken();
+    }
+
+
+    @Override
+    public void deleteRefreshToken(String loginId) {
+        Member member = getMember(loginId);
+        member.changeToken(null);
+    }
+
+    private Member getMember(String loginId) {
+        Optional<Member> findMember = memberRepository.findByLoginId(loginId);
+        if (!findMember.isPresent()) {
+            throw new LoginException("");
+        }
+        return findMember.get();
     }
 }
