@@ -18,6 +18,9 @@ public interface ArticleService {
 
     long addArticle (Long memberId, ArticleDto articleDto);
 
+    long modifyArticle (Long memberId, ArticleDto articleDto);
+
+    long deleteArticle (Long memberId, Long articleId);
     long increaseHit(Long articleId);
 
 }

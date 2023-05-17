@@ -66,6 +66,40 @@ public class ArticleController {
         return new Result<ArticleDetailDto>(articleDetailDto);
     }
 
+    @GetMapping("/{articleId}/modify")
+    @ApiOperation(value = "게시글 수정 불러오기" , response = ArticleDetailDto.class)
+    public Result<?> modify(
+            @PathVariable Long articleId
+    ){
+        ArticleDetailDto articleDetailDto = articleService.searchArticle(articleId);
+        return new Result<ArticleDetailDto>(articleDetailDto);
+    }
+
+    @PostMapping("/{articleId}/modify")
+    @ApiOperation(value = "게시글 수정")
+    public ResponseEntity<?> modify(
+            @PathVariable long articleId,
+            @RequestBody AddArticleRequest request,
+            @RequestParam(name = "loginUserId") long loginUserId
+    ) {
+        ArticleDto articleDto = ArticleDto.builder()
+                .id(articleId)
+                .title(request.getTitle())
+                .content(request.getContent())
+                .build();
+        long result = articleService.modifyArticle(loginUserId, articleDto);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/{articleId}/delete")
+    @ApiOperation(value = "게시글 삭제")
+    public ResponseEntity<?> delete(
+            @PathVariable long articleId,
+            @RequestParam(name = "loginUserId") long loginUserId
+    ) {
+        long result = articleService.deleteArticle(loginUserId, articleId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
     @Data
     @AllArgsConstructor

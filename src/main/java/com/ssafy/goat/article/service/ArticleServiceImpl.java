@@ -54,6 +54,27 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public long modifyArticle(Long memberId, ArticleDto articleDto) {
+        Article article = findArticle(articleDto.getId());
+        if(!article.getMember().getId().equals(memberId)) {
+            throw new ArticleException(ARTICLE_MEMBER_DISCREPANCY);
+        }
+        article.editArticle(articleDto.getTitle(), articleDto.getContent());
+        Article editArticle = articleRepository.save(article);
+        return editArticle.getId();
+    }
+
+    @Override
+    public long deleteArticle(Long memberId, Long articleId) {
+        Article article = findArticle(articleId);
+        if(!article.getMember().getId().equals(memberId)) {
+            throw new ArticleException(ARTICLE_MEMBER_DISCREPANCY);
+        }
+        articleRepository.deleteById(articleId);
+        return articleId;
+    }
+
+    @Override
     public long increaseHit(Long articleId) {
         Article article = findArticle(articleId);
         article.increaseHit();
