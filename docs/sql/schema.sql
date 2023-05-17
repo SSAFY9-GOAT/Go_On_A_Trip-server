@@ -19,7 +19,7 @@ create table if not exists `MEMBER`
     `nickname_last_modified_date` timestamp     not null default current_timestamp,
     `authority`                   varchar(10)   not null default 'CLIENT',
     `sns_id`                      varchar(11)   not null default '-1',
-    'token'                       varchar(1000) null     default null,
+    `token`                       varchar(1000) null     default null,
     `created_date`                timestamp     not null default current_timestamp,
     `last_modified_date`          timestamp     not null default current_timestamp
 );
