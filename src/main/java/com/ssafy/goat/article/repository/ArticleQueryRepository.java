@@ -11,4 +11,6 @@ public interface ArticleQueryRepository {
     Page<ArticleListDto> searchByCondition(ArticleSearch condition, Pageable pageable);
 
     ArticleDetailDto searchById(Long articleId);
+
+
 }
