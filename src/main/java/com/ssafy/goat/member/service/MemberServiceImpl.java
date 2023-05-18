@@ -96,8 +96,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public int withdrawal(Long id, String loginPw) {
-        Optional<Member> findUser = memberRepository.findById(id);
+    public int withdrawal(String id, String loginPw) {
+        Optional<Member> findUser = memberRepository.findByLoginId(id);
         if (!findUser.isPresent()) {
             return -1;
         }
