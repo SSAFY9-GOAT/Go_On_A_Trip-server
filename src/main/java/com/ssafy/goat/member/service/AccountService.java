@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 public interface AccountService {
     LoginMember login(String loginId, String loginPw);
 
+    LoginMember getLoginMember(String loginId);
+
     void saveRefreshToken(String loginId, String refreshToken);
 
     Object getRefreshToken(String loginId);

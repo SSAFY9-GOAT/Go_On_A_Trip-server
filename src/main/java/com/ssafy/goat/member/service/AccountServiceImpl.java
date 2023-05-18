@@ -37,6 +37,21 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public LoginMember getLoginMember(String loginId) {
+        Member member = getMember(loginId);
+
+        boolean snsUser = !member.getSnsId().equals("-1");
+
+        return LoginMember.builder()
+                .id(member.getId())
+                .loginId(member.getLoginId())
+                .nickname(member.getNickname())
+                .authority(member.getAuthority().toString())
+                .snsUser(snsUser)
+                .build();
+    }
+
+    @Override
     public void saveRefreshToken(String loginId, String refreshToken) {
         Member member = getMember(loginId);
         member.changeToken(refreshToken);
