@@ -99,6 +99,7 @@ public class MemberController {
     @PostMapping("/withdrawal")
     @ApiOperation(value = "회원 탈퇴")
     public int withdrawal(@Valid @RequestBody WithdrawalRequest request) {
-        return memberService.withdrawal(request.getId(), request.getLoginPw());
+        log.debug("회원탈퇴 요청 : {}", request);
+        return memberService.withdrawal(request.getLoginId(), request.getLoginPw());
     }
 }

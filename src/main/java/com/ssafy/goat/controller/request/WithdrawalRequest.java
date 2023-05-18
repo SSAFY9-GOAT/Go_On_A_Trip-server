@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 public class WithdrawalRequest {
 
     @NotBlank
-    private Long id;
+    private String loginId;
     @NotBlank
     private String loginPw;
 }
