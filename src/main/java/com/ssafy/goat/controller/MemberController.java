@@ -68,16 +68,17 @@ public class MemberController {
 
     @PostMapping("/modify")
     @ApiOperation(value = "정보 수정하기")
+    // TODO: 2023-05-18 검증 추가하기
     public int modify(@Valid @RequestBody ChangInfoRequest request) {
-        StringTokenizer st = new StringTokenizer(request.getPhone(), "");
+        StringTokenizer st = new StringTokenizer(request.getPhone(), "-");
         ChangUserDto dto = ChangUserDto.builder()
                 .password(request.getPassword())
                 .phone(st.nextToken() + st.nextToken() + st.nextToken())
                 .email(request.getEmail())
                 .nickname(request.getNickname())
                 .build();
-        Long member = memberService.changUserInfo(request.getId(), dto);
-        if (member.equals(request.getId())) {
+        Long member = memberService.changUserInfo(request.getLoginId(), dto);
+        if (member != null) {
             return 1;
         } else {
             return -1;
@@ -87,6 +88,7 @@ public class MemberController {
     @PostMapping("/modipyPw")
     @ApiOperation(value = "비밀번호 변경")
     public int modifyPw(@Valid @RequestBody ChangPasswordRequest request) {
+        log.debug("비밀번호 요청 : {}", request);
         Long id = memberService.changePassword(request.getId(), request.getOriginalPw(), request.getNewPw());
         if (id == null) {
             return -1;

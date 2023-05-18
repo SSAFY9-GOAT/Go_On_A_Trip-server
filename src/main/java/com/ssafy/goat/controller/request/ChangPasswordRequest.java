@@ -12,7 +12,6 @@ public class ChangPasswordRequest {
     @NotNull
     private Long id;
     @NotBlank
-    @Size(min = 8, max = 20)
     private String originalPw;
     @NotBlank
     @Size(min = 8, max = 20)

@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +24,12 @@ public class JwtInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
         final String token = request.getHeader(HEADER_AUTH);
+
+        if (StringUtils.pathEquals(request.getMethod(), "OPTIONS")) {
+            log.debug("if request options method is options, return true");
+
+            return true;
+        }
 
         if (token != null && jwtService.checkToken(token)) {
             log.info("토큰 사용 가능 : {}", token);

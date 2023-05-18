@@ -12,7 +12,7 @@ public interface MemberService {
 
     MemberResponse getUserInfo(String loginId);
 
-    Long changUserInfo(Long id, ChangUserDto changUserDto);
+    Long changUserInfo(String LoginId, ChangUserDto changUserDto);
 
     Long changePassword(Long id, String oldPassword, String newPassword);
 
