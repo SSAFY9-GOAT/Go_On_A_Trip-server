@@ -58,8 +58,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Long changUserInfo(Long id, ChangUserDto changUserDto) {
-        Optional<Member> findUser = memberRepository.findById(id);
+    public Long changUserInfo(String LoginId, ChangUserDto changUserDto) {
+        Optional<Member> findUser = memberRepository.findByLoginId(LoginId);
         if (!findUser.isPresent()) {
             return null;
         }
