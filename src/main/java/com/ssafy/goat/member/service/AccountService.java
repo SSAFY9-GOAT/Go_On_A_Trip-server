@@ -14,4 +14,6 @@ public interface AccountService {
     Object getRefreshToken(String loginId);
 
     void deleteRefreshToken(String loginId);
+
+    Boolean getUserPhone(String loginId, String phone);
 }
