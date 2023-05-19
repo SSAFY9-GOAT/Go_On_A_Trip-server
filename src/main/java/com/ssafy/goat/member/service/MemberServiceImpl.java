@@ -109,6 +109,17 @@ public class MemberServiceImpl implements MemberService {
         return 1;
     }
 
+    @Override
+    public Long findAndChangePassword(String loginId, String newPassword) {
+        Optional<Member> findMember = memberRepository.findByLoginId(loginId);
+        if (!findMember.isPresent()) {
+            return null;
+        }
+        Member member = findMember.get();
+        member.changeLoginPw(newPassword);
+        return member.getId();
+    }
+
     private void duplicateLoginId(MemberAddDto dto) {
         Optional<Member> loginId = memberRepository.findByLoginId(dto.getLoginId());
         if (loginId.isPresent()) {

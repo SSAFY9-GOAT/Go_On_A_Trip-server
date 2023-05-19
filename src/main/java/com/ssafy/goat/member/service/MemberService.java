@@ -17,4 +17,6 @@ public interface MemberService {
     Long changePassword(Long id, String oldPassword, String newPassword);
 
     int withdrawal(String id, String loginPw);
+
+    Long findAndChangePassword(String loginId, String newPassword);
 }

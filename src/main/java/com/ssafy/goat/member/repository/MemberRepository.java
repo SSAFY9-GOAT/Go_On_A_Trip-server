@@ -13,4 +13,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByLoginId(@Param("loginId") String loginIn);
 
     Optional<Member> findById(Long id);
+
+    Optional<Member> findByLoginIdAndPhone(String loginId, String phone);
 }
