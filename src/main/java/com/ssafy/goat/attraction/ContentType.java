@@ -13,17 +13,17 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-public class Sido {
+public class ContentType {
 
     @Id
-    @Column(name = "sido_code")
-    private int code;
-    @Column(name = "sido_name", unique = true, nullable = false, length = 10)
+    @Column(name = "content_type_id")
+    private int id;
+    @Column(name = "content_type_name", unique = true, nullable = false, length = 30)
     public String name;
 
     @Builder
-    public Sido(int code, String name) {
-        this.code = code;
+    public ContentType(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 }

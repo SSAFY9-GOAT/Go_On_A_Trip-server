@@ -16,7 +16,7 @@ public class AttractionInfo {
 
     @Id
     @Column(name = "content_id")
-    private Long id;
+    private int id;
     @Column(length = 100)
     private String title;
     @Column(length = 100)
@@ -45,10 +45,14 @@ public class AttractionInfo {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "gugun_code")
     private Gugun gugun;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "content_type_id")
+    private ContentType contentType;
 
     @Builder
-    public AttractionInfo(Long id, String title, String addr1, String addr2, String zipcode, String tel, String firstImage, String firstImage2, int readcount, double latitude, double longitude, String mlevel, Sido sido, Gugun gugun) {
+    public AttractionInfo(int id, ContentType contentType, String title, String addr1, String addr2, String zipcode, String tel, String firstImage, String firstImage2, int readcount, double latitude, double longitude, String mlevel, Sido sido, Gugun gugun) {
         this.id = id;
+        this.contentType = contentType;
         this.title = title;
         this.addr1 = addr1;
         this.addr2 = addr2;
