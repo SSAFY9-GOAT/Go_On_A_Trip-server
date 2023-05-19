@@ -37,12 +37,9 @@ public class AttractionRepositoryImpl implements AttractionRepositoryCustom {
                         attractionInfo.latitude,
                         attractionInfo.longitude))
                 .from(attractionInfo)
-                .join(attractionInfo.sido, sido)
-                .join(attractionInfo.gugun, gugun)
-                .join(attractionInfo.contentType, contentType)
-                .where(attractionInfo.sido.code.eq(condition.getSidoCode())
-                        .and(attractionInfo.gugun.code.eq(condition.getGugunCode()))
-                        .and(attractionInfo.contentType.id.eq(condition.getContentTypeId()))
+                .where(attractionInfo.sido.code.eq(condition.getSidoCode()),
+                        attractionInfo.gugun.code.eq(condition.getGugunCode()),
+                        attractionInfo.contentType.id.eq(condition.getContentTypeId())
                 )
                 .fetch();
     }
