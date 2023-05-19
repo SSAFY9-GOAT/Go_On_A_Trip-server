@@ -77,7 +77,7 @@ public class MemberController {
                 .email(request.getEmail())
                 .nickname(request.getNickname())
                 .build();
-        Long member = memberService.changUserInfo(request.getLoginId(), dto);
+        Long member = memberService.changeUserInfo(request.getLoginId(), dto);
         if (member != null) {
             return 1;
         } else {
