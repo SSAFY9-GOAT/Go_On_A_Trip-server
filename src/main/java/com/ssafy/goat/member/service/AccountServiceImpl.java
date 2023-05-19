@@ -5,6 +5,7 @@ import com.ssafy.goat.member.Member;
 import com.ssafy.goat.member.dto.LoginMember;
 import com.ssafy.goat.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,6 +14,7 @@ import static com.ssafy.goat.common.exception.ExceptionMessage.LOGIN_EXCEPTION;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AccountServiceImpl implements AccountService {
 
     private final MemberRepository memberRepository;
@@ -68,6 +70,17 @@ public class AccountServiceImpl implements AccountService {
     public void deleteRefreshToken(String loginId) {
         Member member = getMember(loginId);
         member.changeToken(null);
+    }
+
+    @Override
+    public Boolean getUserPhone(String loginId, String phone) {
+        log.debug("[비밀번호 찾기 - 서비스] 아이디 =" + loginId);
+        log.debug("[비밀번호 찾기 - 서비스] 전화번호 =" + phone);
+        Optional<Member> findMember = memberRepository.findByLoginIdAndPhone(loginId, phone);
+        if (!findMember.isPresent()) {
+            return false;
+        }
+        return true;
     }
 
     private Member getMember(String loginId) {
