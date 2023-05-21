@@ -14,7 +14,8 @@ public class WebConfig implements WebMvcConfigurer {
             "/login", "/regist", "/logout/**", "/user/**", "/findPw",
             "/error/**",
             "/articles",
-            "/api/**"
+            "/api/**",
+            "/tripplan/**",
     };
 
     @Autowired
