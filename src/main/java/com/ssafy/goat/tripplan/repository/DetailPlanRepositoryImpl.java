@@ -20,7 +20,7 @@ public class DetailPlanRepositoryImpl implements DetailPlanQueryRepository{
     public List<DetailPlanDto> findByTripPlanId(Long tripPlanId) {
         List<DetailPlanDto> detailPlanDtos = queryFactory
                 .select(Projections.constructor(DetailPlanDto.class,
-                        tripPlan.title,
+                        attractionInfo.title,
                         detailPlan.id,
                         attractionInfo.latitude,
                         attractionInfo.longitude
