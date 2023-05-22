@@ -6,6 +6,7 @@ import com.ssafy.goat.attraction.service.AttractionService;
 import com.ssafy.goat.controller.request.AddTripPlanRequest;
 import com.ssafy.goat.tripplan.dto.PlanListDto;
 import com.ssafy.goat.tripplan.dto.PlanSearch;
+import com.ssafy.goat.tripplan.dto.TripPlanDto;
 import com.ssafy.goat.tripplan.service.PlanService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -31,7 +32,7 @@ public class TripPlanController {
     private final AttractionService attractionService;
 
     @GetMapping("")
-    @ApiOperation(value = "여행계획 목록을 불러옴", response = PlanListDto.class)
+    @ApiOperation(value = "여행계획 목록 조회", response = PlanListDto.class)
     public Result<?> list(
             @RequestParam(name = "condition", defaultValue = "") String keyword,
             @RequestParam(defaultValue = "1") Integer page
@@ -45,7 +46,7 @@ public class TripPlanController {
     }
 
     @GetMapping("tripPlanList/{title}")
-    @ApiOperation(value = "여행목록 불러옴")
+    @ApiOperation(value = "관광지정보 조회")
     public List<AttractionDto> search(
             @PathVariable String title
     ) {
@@ -71,6 +72,15 @@ public class TripPlanController {
             planService.addDetailPlan(loginUserId, tripPlanId, info.getId(), num++);
         }
         return new ResponseEntity<>(tripPlanId, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{tripPlanId}")
+    @ApiOperation(value = "여행계획 상세조회")
+    public ResponseEntity<?> view(
+            @PathVariable Long tripPlanId
+    ) {
+        TripPlanDto tripPlanDto = planService.showPlan(tripPlanId);
+        return new ResponseEntity<>(tripPlanDto, HttpStatus.OK);
     }
 
     @Data
