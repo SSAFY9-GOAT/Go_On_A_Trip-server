@@ -59,23 +59,29 @@ create table if not exists `NOTICE`
     foreign key (`last_modified_by`) references MEMBER (`member_id`)
 );
 
+create table if not exists `UPLOAD_FILE`
+(
+    `file_id`          bigint       not null primary key auto_increment,
+    `upload_file_name` varchar(255) not null,
+    `store_file_name`  varchar(255) not null
+);
+
 create table if not exists `HOT_PLACE`
 (
     `hot_place_id`       bigint       not null primary key auto_increment,
     `name`               varchar(50)  not null,
     `desc`               varchar(500) not null,
+    `latitude`           double       not null,
+    `longitude`          double       not null,
     `hit`                int          not null default 0,
     `vote`               int          not null default 0,
     `visited_date`       varchar(10)  not null,
-    `upload_file_name`   varchar(255) not null,
-    `store_file_name`    varchar(255) not null,
     `member_id`          bigint       not null,
-    `content_id`         int          not null,
-    `content_type_id`    int          not null,
+    `file_id`            bigint       not null,
     `created_date`       timestamp    not null default current_timestamp,
     `last_modified_date` timestamp    not null default current_timestamp,
     foreign key (`member_id`) references MEMBER (`member_id`),
-    foreign key (`content_id`) references ATTRACTION_INFO (`content_id`)
+    foreign key (`file_id`) references UPLOAD_FILE (`file_id`)
 );
 
 create table if not exists `FAVORITE`
