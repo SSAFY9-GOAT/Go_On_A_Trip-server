@@ -1,5 +1,6 @@
 package com.ssafy.goat.tripplan.service;
 
+import com.ssafy.goat.attraction.dto.AttractionDto;
 import com.ssafy.goat.tripplan.TripPlan;
 import com.ssafy.goat.tripplan.dto.PlanListDto;
 import com.ssafy.goat.tripplan.dto.PlanSearch;
@@ -9,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PlanServiceImpl implements PlanService{
@@ -17,5 +20,10 @@ public class PlanServiceImpl implements PlanService{
     @Override
     public Page<PlanListDto> searchPlans(PlanSearch condition, Pageable pageable) {
         return tripPlanRepository.searchByCondition(condition, pageable);
+    }
+
+    @Override
+    public List<AttractionDto> searchPlans(String title) {
+        return tripPlanRepository.searchByTitle(title);
     }
 }

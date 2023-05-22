@@ -1,12 +1,17 @@
 package com.ssafy.goat.tripplan.service;
 
+import com.ssafy.goat.attraction.dto.AttractionDto;
 import com.ssafy.goat.tripplan.dto.PlanListDto;
 import com.ssafy.goat.tripplan.dto.PlanSearch;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface PlanService {
     @Transactional(readOnly = true)
     Page<PlanListDto> searchPlans(PlanSearch condition, Pageable pageable);
+
+    List<AttractionDto> searchPlans(String title);
 }
