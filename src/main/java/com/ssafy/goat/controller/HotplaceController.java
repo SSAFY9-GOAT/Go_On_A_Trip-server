@@ -5,22 +5,23 @@ import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.GpsDirectory;
 import com.ssafy.goat.controller.request.AddHotplaceRequest;
+import com.ssafy.goat.controller.request.HotPlaceListRequest;
 import com.ssafy.goat.controller.request.ImageRequest;
+import com.ssafy.goat.controller.response.HotPlaceListResponse;
 import com.ssafy.goat.hotplace.service.HotplaceService;
 import com.ssafy.goat.hotplace.service.dto.AddHotPlaceDto;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -80,6 +81,15 @@ public class HotplaceController {
                 .storeFileName(storeFileName)
                 .build();
         return hotplaceService.writeHotPlace(request.getLoginId(), addHotPlaceDto);
+    }
+
+    @GetMapping("")
+    @ApiOperation(value = "핫플레이스 리스트 가져오기")
+    public List<HotPlaceListResponse> getList(@RequestBody HotPlaceListRequest request) {
+        log.debug("[핫플레이스] 리스트 요청 = {}, {}", request.getName(), request.getSortCondition());
+        List<HotPlaceListResponse> hotplaceList = hotplaceService.getHotplaceList(request);
+
+        return hotplaceList;
     }
 
     @PostMapping("/getImageLocation")
