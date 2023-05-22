@@ -12,6 +12,7 @@ import java.util.List;
 public interface PlanService {
     @Transactional(readOnly = true)
     Page<PlanListDto> searchPlans(PlanSearch condition, Pageable pageable);
-
     List<AttractionDto> searchPlans(String title);
+    Long addTripPlan(Long loginMemberId, String title);
+    Long addDetailPlan(Long loginMemberId, Long tripPlanId, int contentId, int num);
 }
