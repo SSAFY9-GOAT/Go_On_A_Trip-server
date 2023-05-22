@@ -4,12 +4,15 @@ import com.ssafy.goat.attraction.AttractionInfo;
 import com.ssafy.goat.attraction.dto.AttractionDto;
 import com.ssafy.goat.attraction.repository.AttractionRepository;
 import com.ssafy.goat.common.exception.ArticleException;
+import com.ssafy.goat.common.exception.PlanException;
 import com.ssafy.goat.member.Member;
 import com.ssafy.goat.member.repository.MemberRepository;
 import com.ssafy.goat.tripplan.DetailPlan;
 import com.ssafy.goat.tripplan.TripPlan;
+import com.ssafy.goat.tripplan.dto.DetailPlanDto;
 import com.ssafy.goat.tripplan.dto.PlanListDto;
 import com.ssafy.goat.tripplan.dto.PlanSearch;
+import com.ssafy.goat.tripplan.dto.TripPlanDto;
 import com.ssafy.goat.tripplan.repository.DetailPlanRepository;
 import com.ssafy.goat.tripplan.repository.TripPlanRepository;
 import lombok.RequiredArgsConstructor;
@@ -64,6 +67,23 @@ public class PlanServiceImpl implements PlanService{
                 .build();
         DetailPlan savedDetailPlan = detailPlanRepository.save(detailPlan);
         return savedDetailPlan.getId();
+    }
+
+    @Override
+    public TripPlanDto showPlan(Long tripPlanId) {
+        Optional<TripPlan> findTripPlan = tripPlanRepository.findById(tripPlanId);
+        if(!findTripPlan.isPresent()){
+            throw new PlanException();
+        }
+        TripPlan tripPlan = findTripPlan.get();
+
+        List<DetailPlanDto> detailPlans = detailPlanRepository.findByTripPlanId(tripPlanId);
+
+        return TripPlanDto.builder()
+                .tripPlanId(tripPlan.getId())
+                .title(tripPlan.getTitle())
+                .detailPlans(detailPlans)
+                .build();
     }
 
     private Member findMember(Long memberId) {
