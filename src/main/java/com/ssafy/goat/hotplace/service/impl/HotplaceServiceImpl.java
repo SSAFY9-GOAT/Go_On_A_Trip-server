@@ -2,6 +2,8 @@ package com.ssafy.goat.hotplace.service.impl;
 
 import com.ssafy.goat.common.domain.UploadFile;
 import com.ssafy.goat.common.exception.LoginException;
+import com.ssafy.goat.controller.request.HotPlaceListRequest;
+import com.ssafy.goat.controller.response.HotPlaceListResponse;
 import com.ssafy.goat.hotplace.HotPlace;
 import com.ssafy.goat.hotplace.repository.HotplaceRepository;
 import com.ssafy.goat.hotplace.repository.UploadFileRepository;
@@ -13,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -57,5 +60,10 @@ public class HotplaceServiceImpl implements HotplaceService {
         log.debug("[핫플레이스] 저장 객체 = {}", hotPlace);
         HotPlace savedHotplace = hotplaceRepository.save(hotPlace);
         return savedHotplace.getHotPlaceId();
+    }
+
+    @Override
+    public List<HotPlaceListResponse> getHotplaceList(HotPlaceListRequest request) {
+        return hotplaceRepository.searchByCondition(request);
     }
 }
