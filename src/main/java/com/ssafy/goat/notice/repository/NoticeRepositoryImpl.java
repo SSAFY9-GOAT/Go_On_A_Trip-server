@@ -12,13 +12,15 @@ import java.util.List;
 
 import static com.ssafy.goat.notice.QNotice.notice;
 
-public class NoticeRepositoryImpl implements NoticeQueryRepository{
+public class NoticeRepositoryImpl implements NoticeQueryRepository {
     private final JPAQueryFactory queryFactory;
+
     public NoticeRepositoryImpl(EntityManager em) {
         this.queryFactory = new JPAQueryFactory(em);
     }
+
     @Override
-    public List<NoticeDto> searchTopNotions() {
+    public List<NoticeDto> searchTopNotices() {
         List<NoticeDto> noticeDtos = queryFactory
                 .select(Projections.constructor(NoticeDto.class,
                         notice.id,
@@ -34,7 +36,7 @@ public class NoticeRepositoryImpl implements NoticeQueryRepository{
     }
 
     @Override
-    public Page<NoticeDto> searchNotions(Pageable pageable) {
+    public Page<NoticeDto> searchNotices(Pageable pageable) {
         List<NoticeDto> noticeDtos = queryFactory
                 .select(Projections.constructor(NoticeDto.class,
                         notice.id,
@@ -55,5 +57,21 @@ public class NoticeRepositoryImpl implements NoticeQueryRepository{
                 .fetch()
                 .size();
         return new PageImpl<>(noticeDtos, pageable, count);
+    }
+
+    @Override
+    public NoticeDto searchNotice(Long noticeId) {
+        NoticeDto noticeDto = queryFactory
+                .select(Projections.constructor(NoticeDto.class,
+                        notice.id,
+                        notice.title,
+                        notice.content,
+                        notice.top,
+                        notice.createdDate
+                ))
+                .from(notice)
+                .where(notice.id.eq(noticeId))
+                .fetchFirst();
+        return noticeDto;
     }
 }

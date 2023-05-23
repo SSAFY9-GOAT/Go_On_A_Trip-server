@@ -28,13 +28,24 @@ public class Notice extends TimeBaseEntity {
     @Column(nullable = false)
     private boolean top;
 
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "created_by")
+    private Member createdBy;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "last_modified_by")
+    private Member lastModifiedBy;
+
     @Builder
-    public Notice(Long id, String title, String content, boolean top) {
+    public Notice(Long id, String title, String content, boolean top, Member createdBy, Member lastModifiedBy) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.top = top;
+        this.createdBy = createdBy;
+        this.lastModifiedBy = lastModifiedBy;
     }
+
+
     //== 비즈니스 로직 ==//
     public void editArticle(String title, String content) {
         this.title = title;
