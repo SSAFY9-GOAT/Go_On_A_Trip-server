@@ -3,6 +3,7 @@ package com.ssafy.goat.hotplace.repository.impl;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.goat.controller.request.HotPlaceListRequest;
+import com.ssafy.goat.controller.response.HotPlaceDetail;
 import com.ssafy.goat.controller.response.HotPlaceListResponse;
 import com.ssafy.goat.hotplace.repository.HotplaceRepositoryCustom;
 
@@ -18,6 +19,7 @@ public class HotplaceRepositoryCustomImpl implements HotplaceRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     public HotplaceRepositoryCustomImpl(EntityManager em) {
+
         this.queryFactory = new JPAQueryFactory(em);
     }
 
@@ -39,15 +41,24 @@ public class HotplaceRepositoryCustomImpl implements HotplaceRepositoryCustom {
                 .orderBy(request.getSortCondition() == 1 ? hotPlace.createdDate.desc() : hotPlace.hit.desc())
                 .fetch();
         return list;
+    }
 
-
-//        private Long hotPlaceId;
-//        private String name;
-//        private String desc;
-//        private int hit;
-//        private String storeFileName;
-//
-//        private String nickname;
-//        private String createdDate;
+    @Override
+    public HotPlaceDetail getHotplace(Long hotplaceId) {
+        HotPlaceDetail hotPlaceDetail = queryFactory
+                .select(Projections.constructor(HotPlaceDetail.class,
+                        hotPlace.name,
+                        hotPlace.desc,
+                        hotPlace.latitude,
+                        hotPlace.longitude,
+                        hotPlace.visitedDate,
+                        member.nickname,
+                        uploadFile.storeFileName))
+                .from(hotPlace)
+                .join(hotPlace.member, member)
+                .join(hotPlace.uploadFile, uploadFile)
+                .where(hotPlace.hotPlaceId.eq(hotplaceId))
+                .fetchOne();
+        return hotPlaceDetail;
     }
 }
