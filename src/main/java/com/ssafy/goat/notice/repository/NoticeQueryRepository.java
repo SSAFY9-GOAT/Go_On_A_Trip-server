@@ -1,15 +1,12 @@
-package com.ssafy.goat.notice.service;
-
+package com.ssafy.goat.notice.repository;
 
 import com.ssafy.goat.notice.dto.NoticeDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional
-public interface NoticeService {
+public interface NoticeQueryRepository {
     List<NoticeDto> searchTopNotions();
     Page<NoticeDto> searchNotions(Pageable pageable);
 }

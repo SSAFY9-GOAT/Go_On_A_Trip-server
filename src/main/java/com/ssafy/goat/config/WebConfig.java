@@ -18,6 +18,7 @@ public class WebConfig implements WebMvcConfigurer {
             "/api/**",
             "/tripplan/**",
             "/hotplaces",
+            "/notice/**",
     };
 
     @Autowired

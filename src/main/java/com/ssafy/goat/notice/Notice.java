@@ -25,29 +25,19 @@ public class Notice extends TimeBaseEntity {
     @Lob
     @Column(nullable = false)
     private String content;
-
-    @Column(nullable = false)
-    private int hit;
     @Column(nullable = false)
     private boolean top;
 
-    // TODO: 2023/05/13 이거 맞나?!
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id", insertable = false, updatable = false)
-    private Member createdBy;
-
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id", insertable = false, updatable = false)
-    private Member lastModifiedBy;
-
     @Builder
-    public Notice(Long id, String title, String content, int hit, boolean top, Member createdBy, Member lastModifiedBy) {
+    public Notice(Long id, String title, String content, boolean top) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.hit = hit;
         this.top = top;
-        this.createdBy = createdBy;
-        this.lastModifiedBy = lastModifiedBy;
+    }
+    //== 비즈니스 로직 ==//
+    public void editArticle(String title, String content) {
+        this.title = title;
+        this.content = content;
     }
 }
