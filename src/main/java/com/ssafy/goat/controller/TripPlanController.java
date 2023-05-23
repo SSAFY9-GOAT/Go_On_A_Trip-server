@@ -4,6 +4,7 @@ import com.ssafy.goat.attraction.AttractionInfo;
 import com.ssafy.goat.attraction.dto.AttractionDto;
 import com.ssafy.goat.attraction.service.AttractionService;
 import com.ssafy.goat.controller.request.AddTripPlanRequest;
+import com.ssafy.goat.tripplan.dto.DetailPlanDto;
 import com.ssafy.goat.tripplan.dto.PlanListDto;
 import com.ssafy.goat.tripplan.dto.PlanSearch;
 import com.ssafy.goat.tripplan.dto.TripPlanDto;
@@ -25,7 +26,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/tripplan")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS })
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
 @Slf4j
 public class TripPlanController {
     private final PlanService planService;
@@ -63,12 +64,12 @@ public class TripPlanController {
         Long tripPlanId = planService.addTripPlan(loginUserId, request.getTitle());
         List<Integer> idList = new ArrayList<>();
 
-        for(String id: request.getTripPlanIdList()){
+        for (String id : request.getTripPlanIdList()) {
             idList.add(Integer.parseInt(id));
         }
         List<AttractionInfo> attractionInfos = attractionService.searchAttraction(idList);
         int num = 1;
-        for(AttractionInfo info: attractionInfos){
+        for (AttractionInfo info : attractionInfos) {
             planService.addDetailPlan(loginUserId, tripPlanId, info.getId(), num++);
         }
         return new ResponseEntity<>(tripPlanId, HttpStatus.CREATED);
@@ -83,9 +84,24 @@ public class TripPlanController {
         return new ResponseEntity<>(tripPlanDto, HttpStatus.OK);
     }
 
+    @PostMapping("/{tripPlanId}/delete")
+    @ApiOperation(value = "여행계획 삭제")
+    public ResponseEntity<?> delete(
+            @PathVariable Long tripPlanId,
+            @RequestParam(name = "loginUserId") long loginUserId
+    ) {
+        TripPlanDto tripPlan = planService.showPlan(tripPlanId);
+        for (DetailPlanDto detailPlan : tripPlan.getDetailPlans()) {
+            planService.removeDetailPlan(detailPlan.getDetailPlanId());
+        }
+        planService.removeTripPlan(tripPlanId);
+
+        return new ResponseEntity<>(tripPlanId, HttpStatus.OK);
+    }
+
     @Data
     @AllArgsConstructor
-    static class Result<T>{
+    static class Result<T> {
         private T data;
     }
 }

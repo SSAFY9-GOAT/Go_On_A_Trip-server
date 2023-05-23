@@ -17,4 +17,6 @@ public interface PlanService {
     Long addTripPlan(Long loginMemberId, String title);
     Long addDetailPlan(Long loginMemberId, Long tripPlanId, int contentId, int num);
     TripPlanDto showPlan(Long tripPlanId);
+    void removeDetailPlan(Long detailPlanId);
+    void removeTripPlan(Long tripPlanId);
 }

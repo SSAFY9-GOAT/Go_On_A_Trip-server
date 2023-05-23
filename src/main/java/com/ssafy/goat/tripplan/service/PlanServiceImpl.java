@@ -83,7 +83,18 @@ public class PlanServiceImpl implements PlanService{
                 .tripPlanId(tripPlan.getId())
                 .title(tripPlan.getTitle())
                 .detailPlans(detailPlans)
+                .nickname(tripPlan.getMember().getNickname())
                 .build();
+    }
+
+    @Override
+    public void removeDetailPlan(Long detailPlanId) {
+        detailPlanRepository.deleteById(detailPlanId);
+    }
+
+    @Override
+    public void removeTripPlan(Long tripPlanId) {
+        tripPlanRepository.deleteById(tripPlanId);
     }
 
     private Member findMember(Long memberId) {
