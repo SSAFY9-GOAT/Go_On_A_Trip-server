@@ -14,8 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static com.ssafy.goat.common.exception.ExceptionMessage.NOT_FOUND_ARTICLE;
-
 @Service
 @RequiredArgsConstructor
 public class NoticeServiceImpl implements NoticeService {
@@ -55,6 +53,32 @@ public class NoticeServiceImpl implements NoticeService {
     public NoticeDto searchNotice(Long noticeId) {
         NoticeDto noticeDto = noticeRepository.searchNotice(noticeId);
         return noticeDto;
+    }
+
+    @Override
+    public Long modifyNotice(Long loginUserId, NoticeDto noticeDto) {
+        Optional<Notice> findNotice = noticeRepository.findById(noticeDto.getId());
+        if(!findNotice.isPresent()) {
+            throw new NoticeException();
+        }
+        Notice notice = findNotice.get();
+        notice.editNotice(noticeDto.getTitle(), noticeDto.getContent());
+        Notice editNotice = noticeRepository.save(notice);
+        return editNotice.getId();
+    }
+
+    @Override
+    public Long deleteNotice(Long loginUserId, Long noticeId) {
+        Optional<Notice> findNotice = noticeRepository.findById(noticeId);
+        if(!findNotice.isPresent()) {
+            throw new NoticeException();
+        }
+        Notice notice = findNotice.get();
+        if(!notice.getCreatedBy().getId().equals(loginUserId)) {
+            throw new NoticeException();
+        }
+        noticeRepository.deleteById(noticeId);
+        return noticeId;
     }
 
 }

@@ -47,7 +47,7 @@ public class Notice extends TimeBaseEntity {
 
 
     //== 비즈니스 로직 ==//
-    public void editArticle(String title, String content) {
+    public void editNotice(String title, String content) {
         this.title = title;
         this.content = content;
     }

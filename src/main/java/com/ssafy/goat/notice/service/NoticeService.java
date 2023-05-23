@@ -18,4 +18,6 @@ public interface NoticeService {
     Long addNotice(Long loginUserId, NoticeDto noticeDto);
 
     NoticeDto searchNotice(Long noticeId);
+    Long modifyNotice(Long loginUserId, NoticeDto noticeDto);
+    Long deleteNotice(Long loginUserId, Long noticeId);
 }

@@ -64,6 +64,31 @@ public class NoticeController {
         return new Result<>(noticeDto);
     }
 
+    @PostMapping("/{noticeId}/modify")
+    @ApiOperation(value = "공지사항 수정")
+    public ResponseEntity<?> modify(
+            @PathVariable long noticeId,
+            @RequestBody AddNoticeDto request,
+            @RequestParam(name = "loginUserId") long loginUserId
+    ) {
+        NoticeDto noticeDto = NoticeDto.builder()
+                .id(noticeId)
+                .title(request.getTitle())
+                .content(request.getContent())
+                .build();
+        long result = noticeService.modifyNotice(loginUserId, noticeDto);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/{noticeId}/delete")
+    @ApiOperation(value = "공지사항 삭제")
+    public ResponseEntity<?> delete(
+            @PathVariable long noticeId,
+            @RequestParam(name = "loginUserId") long loginUserId
+    ) {
+        long result = noticeService.deleteNotice(loginUserId, noticeId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
     @Data
     @AllArgsConstructor
