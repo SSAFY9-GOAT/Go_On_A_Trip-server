@@ -7,13 +7,16 @@ import com.drew.metadata.exif.GpsDirectory;
 import com.ssafy.goat.controller.request.AddHotplaceRequest;
 import com.ssafy.goat.controller.request.HotPlaceListRequest;
 import com.ssafy.goat.controller.request.ImageRequest;
+import com.ssafy.goat.controller.response.HotPlaceDetail;
 import com.ssafy.goat.controller.response.HotPlaceListResponse;
 import com.ssafy.goat.hotplace.service.HotplaceService;
 import com.ssafy.goat.hotplace.service.dto.AddHotPlaceDto;
+import com.ssafy.goat.trend.service.TrendService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,6 +35,7 @@ import java.util.UUID;
 public class HotplaceController {
 
     private final HotplaceService hotplaceService;
+    private final TrendService trendService;
 
     @Value("${file.imgPath}")
     public String fileDir;
@@ -85,11 +89,27 @@ public class HotplaceController {
 
     @GetMapping("")
     @ApiOperation(value = "핫플레이스 리스트 가져오기")
-    public List<HotPlaceListResponse> getList(@RequestBody HotPlaceListRequest request) {
-        log.debug("[핫플레이스] 리스트 요청 = {}, {}", request.getName(), request.getSortCondition());
-        List<HotPlaceListResponse> hotplaceList = hotplaceService.getHotplaceList(request);
+    public List<HotPlaceListResponse> getList(
+            @RequestParam String name,
+            @RequestParam int sortCondition) {
+        log.debug("[핫플레이스] 리스트 요청 = {}, {}", name, sortCondition);
+        HotPlaceListRequest request = HotPlaceListRequest.builder()
+                .name(name)
+                .sortCondition(sortCondition)
+                .build();
 
-        return hotplaceList;
+        return hotplaceService.getHotplaceList(request);
+    }
+
+    @GetMapping("/{hotplaceId}")
+    @ApiOperation(value = "핫플레이스 조회")
+    public HotPlaceDetail getDetail(@PathVariable Long hotplaceId, @Param("id") Long id) {
+        log.debug("[핫플레이스] 정보 조회 ={}", hotplaceId);
+        if (hotplaceService.updateHit(hotplaceId) < 0) {
+            return null;
+        }
+        trendService.increaseInfo(id, hotplaceId);
+        return hotplaceService.getHotplace(hotplaceId);
     }
 
     @PostMapping("/getImageLocation")

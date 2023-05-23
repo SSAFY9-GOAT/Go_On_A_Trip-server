@@ -3,6 +3,7 @@ package com.ssafy.goat.hotplace.service.impl;
 import com.ssafy.goat.common.domain.UploadFile;
 import com.ssafy.goat.common.exception.LoginException;
 import com.ssafy.goat.controller.request.HotPlaceListRequest;
+import com.ssafy.goat.controller.response.HotPlaceDetail;
 import com.ssafy.goat.controller.response.HotPlaceListResponse;
 import com.ssafy.goat.hotplace.HotPlace;
 import com.ssafy.goat.hotplace.repository.HotplaceRepository;
@@ -65,5 +66,23 @@ public class HotplaceServiceImpl implements HotplaceService {
     @Override
     public List<HotPlaceListResponse> getHotplaceList(HotPlaceListRequest request) {
         return hotplaceRepository.searchByCondition(request);
+    }
+
+    @Override
+    public HotPlaceDetail getHotplace(Long hotplaceId) {
+        return hotplaceRepository.getHotplace(hotplaceId);
+    }
+
+    @Override
+    public int updateHit(Long hotPlaceId) {
+        Optional<HotPlace> findHotplace = hotplaceRepository.findById(hotPlaceId);
+        if (!findHotplace.isPresent()) {
+            return -1;
+        }
+
+        HotPlace hotPlace = findHotplace.get();
+        hotPlace.increaseHit();
+
+        return hotPlace.getHit();
     }
 }
