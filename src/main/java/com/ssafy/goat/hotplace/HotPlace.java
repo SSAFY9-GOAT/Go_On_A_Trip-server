@@ -53,4 +53,8 @@ public class HotPlace extends TimeBaseEntity {
         this.uploadFile = uploadFile;
         this.member = member;
     }
+
+    public void increaseHit() {
+        this.hit += 1;
+    }
 }
