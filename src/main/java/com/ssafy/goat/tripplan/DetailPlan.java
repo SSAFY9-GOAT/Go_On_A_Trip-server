@@ -17,14 +17,11 @@ import static javax.persistence.FetchType.LAZY;
 public class DetailPlan extends TimeBaseEntity {
 
     @Id
+    @GeneratedValue
     @Column(name = "detail_plan_id")
     private Long id;
     @Column(nullable = false)
     private int sequence;
-    @Column(nullable = false)
-    private LocalDateTime createdDate;
-    @Column(nullable = false)
-    private LocalDateTime lastModifiedDate;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "trip_plan_id")
@@ -34,11 +31,9 @@ public class DetailPlan extends TimeBaseEntity {
     private AttractionInfo attractionInfo;
 
     @Builder
-    public DetailPlan(Long id, TripPlan tripPlan, AttractionInfo attractionInfo, int sequence, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
+    public DetailPlan(Long id, TripPlan tripPlan, AttractionInfo attractionInfo, int sequence) {
         this.id = id;
         this.sequence = sequence;
-        this.createdDate = createdDate;
-        this.lastModifiedDate = lastModifiedDate;
         this.tripPlan = tripPlan;
         this.attractionInfo = attractionInfo;
     }

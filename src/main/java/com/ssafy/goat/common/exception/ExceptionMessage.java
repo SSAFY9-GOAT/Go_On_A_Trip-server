@@ -8,4 +8,6 @@ public abstract class ExceptionMessage {
     public static final String ARTICLE_EXCEPTION = "게시물을 등록하지 못했습니다.";
     public static final String NOT_FOUND_ARTICLE = "등록되지 않은 게시물입니다.";
     public static final String ARTICLE_MEMBER_DISCREPANCY = "게시물의 작성자가 아닙니다.";
+
+    public static final String TRIPPLAN_EXCEPTION = "존재하지 않은 여행계획입니다";
 }
