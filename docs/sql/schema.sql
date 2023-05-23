@@ -86,11 +86,11 @@ create table if not exists `HOT_PLACE`
 
 create table if not exists `FAVORITE`
 (
-    `favorite_id` bigint not null primary key auto_increment,
-    `member_id`   bigint not null,
-    `hotplace_id` bigint not null,
+    `favorite_id`  bigint not null primary key auto_increment,
+    `member_id`    bigint not null,
+    `hot_place_id` bigint not null,
     foreign key (`member_id`) references MEMBER (`member_id`),
-    foreign key (`hotplace_id`) references HOT_PLACE (`hot_place_id`)
+    foreign key (`hot_place_id`) references HOT_PLACE (`hot_place_id`)
 );
 
 
@@ -119,12 +119,12 @@ create table if not exists `detail_plan`
 
 create table if not exists `TREND`
 (
-    `trend_id`   bigint not null primary key auto_increment,
-    `content_id` int    not null,
-    `teenage`    int    not null,
-    `twenty`     int    not null,
-    `thirty`     int    not null,
-    `male`       int    not null,
-    `female`     int    not null,
-    foreign key (`content_id`) references ATTRACTION_INFO (`content_id`)
-)
+    `trend_id`     bigint not null primary key auto_increment,
+    `hot_place_id` bigint not null,
+    `teenage`      int    not null,
+    `twenty`       int    not null,
+    `thirty`       int    not null,
+    `male`         int    not null,
+    `female`       int    not null,
+    foreign key (`hot_place_id`) references HOT_PLACE (`hot_place_id`)
+);
