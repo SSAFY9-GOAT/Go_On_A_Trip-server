@@ -36,6 +36,8 @@ public class MessageController {
     private String API_KEY;
     @Value("${MESSAGE_API_SECRET}")
     private String API_SECRET_KEY;
+    @Value("${FROM_PHONE}")
+    private String FROM_PHONE;
     private String targetUrl = "http://api.coolsms.co.kr/messages/v4/send";
 
     private static final String SUCCESS = "success";
@@ -63,7 +65,7 @@ public class MessageController {
             String newPw = getRamdomPassword(12);
 
             Message message = new Message();
-            message.setFrom(phone);
+            message.setFrom(FROM_PHONE);
             message.setTo(phone);
             message.setText("[GOAT] 임시번호가 발급되었습니다.\n" + newPw + "\n로그인 후 비밀번호를 변경하세요.");
             SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
