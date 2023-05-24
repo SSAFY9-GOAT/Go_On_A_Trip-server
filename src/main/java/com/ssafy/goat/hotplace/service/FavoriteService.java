@@ -10,5 +10,5 @@ public interface FavoriteService {
 
     List<Long> getUserLikeList(Long memberId);
 
-    Long cancelLike(Long favoriteId);
+    Long cancelLike(Long memberId, Long hotplaceId);
 }

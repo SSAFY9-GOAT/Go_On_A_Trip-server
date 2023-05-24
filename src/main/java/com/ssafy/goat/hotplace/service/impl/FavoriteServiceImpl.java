@@ -50,8 +50,17 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     @Override
-    public Long cancelLike(Long favoriteId) {
-        favoriteRepository.deleteById(favoriteId);
-        return favoriteId;
+    public Long cancelLike(Long memberId, Long hotplaceId) {
+//        favoriteRepository.findByMemberAndHotplace();
+        Member member = memberRepository.findById(memberId).get();
+        HotPlace hotPlace = hotplaceRepository.findById(hotplaceId).get();
+        Optional<Favorite> findFavorite = favoriteRepository.findByMemberAndHotPlace(member, hotPlace);
+        if(!findFavorite.isPresent()){
+            log.debug("좋아요없음");
+            return null;
+        }
+        Favorite favorite = findFavorite.get();
+        favoriteRepository.deleteById(favorite.getFavoriteId());
+        return favorite.getFavoriteId();
     }
 }
