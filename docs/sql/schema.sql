@@ -24,6 +24,13 @@ create table if not exists `MEMBER`
     `last_modified_date`          timestamp     not null default current_timestamp
 );
 
+create table if not exists `SNS_USER`
+(
+    `id`        varchar(100) not null primary key,
+    `member_id` bigint       not null,
+    foreign key (`member_id`) references MEMBER (`member_id`)
+);
+
 # drop table if exists content_type;
 
 create table if not exists `CONTENT_TYPE`
