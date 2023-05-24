@@ -3,9 +3,11 @@ package com.ssafy.goat.member.service;
 import com.ssafy.goat.common.exception.DuplicateException;
 import com.ssafy.goat.controller.response.MemberResponse;
 import com.ssafy.goat.member.Member;
+import com.ssafy.goat.member.SnsUser;
 import com.ssafy.goat.member.dto.ChangUserDto;
 import com.ssafy.goat.member.dto.MemberAddDto;
 import com.ssafy.goat.member.repository.MemberRepository;
+import com.ssafy.goat.member.repository.SnsUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
+    private final SnsUserRepository snsUserRepository;
 
     // TODO: 2023-05-16 아이디로 멤버 찾아오는거 함수로 빼기, 예외 처리하기
     @Override
@@ -37,6 +40,30 @@ public class MemberServiceImpl implements MemberService {
                 .build();
         Member member = memberRepository.save(addMember);
         return member.getId();
+    }
+
+    @Override
+    public String snsSignUp(Long memberId, String id) {
+        Optional<Member> findMember = memberRepository.findById(memberId);
+        if (!findMember.isPresent()) {
+            return null;
+        }
+        Member member = findMember.get();
+        SnsUser saved = snsUserRepository.save(SnsUser.builder()
+                .id(id)
+                .member(member)
+                .build());
+        return saved.getId();
+    }
+
+    @Override
+    public Member getSnsUser(String snsId) {
+        Optional<SnsUser> findSnsUer = snsUserRepository.findById(snsId);
+        if (!findSnsUer.isPresent()) {
+            return null;
+        }
+        SnsUser snsUser = findSnsUer.get();
+        return snsUser.getMember();
     }
 
     @Override
