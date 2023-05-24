@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
     private static final String[] EXCLUDE_PATHS = {
             "/index",
-            "/login", "/regist", "/logout/**", "/user/**", "/findPw",
+            "/login", "/regist", "/logout/**", "/user/**", "/findPw", "/naverLogin",
             "/error/**",
             "/articles",
             "/api/**",
