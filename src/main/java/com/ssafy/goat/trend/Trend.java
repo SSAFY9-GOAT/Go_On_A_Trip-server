@@ -59,4 +59,25 @@ public class Trend {
     public void increaseFemale() {
         this.female += 1;
     }
+
+
+    public void increaseTeenage(int size) {
+        this.teenage += size;
+    }
+
+    public void increaseTwenty(int size) {
+        this.twenty += size;
+    }
+
+    public void increaseThirty(int size) {
+        this.thirty += size;
+    }
+
+    public void increaseMale(int size) {
+        this.male += 1;
+    }
+
+    public void increaseFemale(int size) {
+        this.female += size;
+    }
 }

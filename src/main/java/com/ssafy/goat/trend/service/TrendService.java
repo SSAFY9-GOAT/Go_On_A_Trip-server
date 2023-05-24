@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface TrendService {
     int increaseInfo(Long memberId, Long hotPlaceId);
+    int increaseInfo(Long memberId, Long hotPlaceId,int size);
 
     TrendViewDto popularByTeenage();
 
