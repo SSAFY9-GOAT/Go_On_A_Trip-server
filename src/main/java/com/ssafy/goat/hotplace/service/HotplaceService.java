@@ -17,4 +17,6 @@ public interface HotplaceService {
     HotPlaceDetail getHotplace(Long hotplaceId);
 
     int updateHit(Long hotPlaceId);
+
+    int updateHit(Long hotPlaceId, int size);
 }

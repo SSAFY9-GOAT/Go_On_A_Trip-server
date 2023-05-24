@@ -9,6 +9,7 @@ import com.ssafy.goat.controller.request.HotPlaceListRequest;
 import com.ssafy.goat.controller.request.ImageRequest;
 import com.ssafy.goat.controller.response.HotPlaceDetail;
 import com.ssafy.goat.controller.response.HotPlaceListResponse;
+import com.ssafy.goat.hotplace.service.FavoriteService;
 import com.ssafy.goat.hotplace.service.HotplaceService;
 import com.ssafy.goat.hotplace.service.dto.AddHotPlaceDto;
 import com.ssafy.goat.trend.service.TrendService;
@@ -23,10 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,6 +34,7 @@ public class HotplaceController {
 
     private final HotplaceService hotplaceService;
     private final TrendService trendService;
+    private final FavoriteService favoriteService;
 
     @Value("${file.imgPath}")
     public String fileDir;
@@ -148,5 +147,39 @@ public class HotplaceController {
         result.put("lat", lat);
         result.put("lon", lon);
         return result;
+    }
+
+    @PostMapping("/userLike/{hotplaceId}/{memberId}")
+    @ApiOperation(value = "핫플레이스 좋아요")
+    public Long userLike(
+            @PathVariable Long hotplaceId,
+            @PathVariable Long memberId) {
+        Long likeHotplace = favoriteService.likeHotplace(memberId, hotplaceId);
+
+        hotplaceService.updateHit(hotplaceId, 5);
+        trendService.increaseInfo(memberId, hotplaceId, 5);
+
+        return likeHotplace;
+    }
+
+    @PostMapping("/unLike/{hotplaceId}/{memberId}")
+    @ApiOperation(value = "핫플레이스 좋아요 취소")
+    public Long unLike(
+            @PathVariable Long hotplaceId,
+            @PathVariable Long memberId) {
+
+        Long likeHotplace = favoriteService.cancelLike(memberId, hotplaceId);
+
+//        hotplaceService.updateHit(hotplaceId,5);
+
+        return likeHotplace;
+    }
+
+    @PostMapping("/getLike/{memberId}")
+    @ApiOperation(value = "핫플레이스 좋아요 목록")
+    public List<Long> getLike(
+            @PathVariable Long memberId) {
+
+        return favoriteService.getUserLikeList(memberId);
     }
 }

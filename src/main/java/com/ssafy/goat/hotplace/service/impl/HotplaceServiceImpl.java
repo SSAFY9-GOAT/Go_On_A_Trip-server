@@ -85,4 +85,17 @@ public class HotplaceServiceImpl implements HotplaceService {
 
         return hotPlace.getHit();
     }
+
+    @Override
+    public int updateHit(Long hotPlaceId, int size) {
+        Optional<HotPlace> findHotplace = hotplaceRepository.findById(hotPlaceId);
+        if (!findHotplace.isPresent()) {
+            return -1;
+        }
+
+        HotPlace hotPlace = findHotplace.get();
+        hotPlace.increaseHit(5);
+
+        return hotPlace.getHit();
+    }
 }

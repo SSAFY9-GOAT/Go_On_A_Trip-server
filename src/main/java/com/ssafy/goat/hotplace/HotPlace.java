@@ -23,7 +23,7 @@ public class HotPlace extends TimeBaseEntity {
     @Column(nullable = false)
     private String name;
     @Lob
-    @Column(name = "`desc`",nullable = false)
+    @Column(name = "`desc`", nullable = false)
     private String desc;
     private double latitude;
     private double longitude;
@@ -56,5 +56,9 @@ public class HotPlace extends TimeBaseEntity {
 
     public void increaseHit() {
         this.hit += 1;
+    }
+
+    public void increaseHit(int size) {
+        this.hit += size;
     }
 }
