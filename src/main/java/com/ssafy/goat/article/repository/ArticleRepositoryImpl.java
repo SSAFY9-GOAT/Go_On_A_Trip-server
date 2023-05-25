@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static com.ssafy.goat.article.QArticle.article;
+import static com.ssafy.goat.hotplace.QHotPlace.hotPlace;
 import static com.ssafy.goat.member.QMember.member;
 
 
@@ -39,7 +40,7 @@ public class ArticleRepositoryImpl implements ArticleQueryRepository{
                 .from(article)
                 .join(article.member, member)
                 .where(isKeyword(condition.getCondition()))
-                .orderBy(article.id.desc())
+                .orderBy(condition.getSortCondition() == 1 ? article.id.desc() : article.hit.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
