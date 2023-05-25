@@ -33,7 +33,7 @@ public class TrendServiceImpl implements TrendService {
         Member member = findMember.get();
         int age = LocalDateTime.now().getYear() - Integer.parseInt(member.getBirthyear());
         log.debug("연령대 = {}", age);
-        log.debug("지금 = {}", LocalDateTime.now().getDayOfYear());
+        log.debug("지금 = {}", LocalDateTime.now().getYear());
         int gender = member.getGender().equals("M") ? 1 : 2;
 
         Optional<HotPlace> findHotplace = hotplaceRepository.findById(hotPlaceId);
@@ -84,7 +84,7 @@ public class TrendServiceImpl implements TrendService {
         Member member = findMember.get();
         int age = LocalDateTime.now().getYear() - Integer.parseInt(member.getBirthyear());
         log.debug("연령대 = {}", age);
-        log.debug("지금 = {}", LocalDateTime.now().getDayOfYear());
+        log.debug("지금 = {}", LocalDateTime.now().getYear());
         int gender = member.getGender().equals("M") ? 1 : 2;
 
         Optional<HotPlace> findHotplace = hotplaceRepository.findById(hotPlaceId);

@@ -68,7 +68,6 @@ public class MemberController {
 
     @PostMapping("/modify")
     @ApiOperation(value = "정보 수정하기")
-    // TODO: 2023-05-18 검증 추가하기
     public int modify(@Valid @RequestBody ChangInfoRequest request) {
         StringTokenizer st = new StringTokenizer(request.getPhone(), "-");
         ChangUserDto dto = ChangUserDto.builder()
